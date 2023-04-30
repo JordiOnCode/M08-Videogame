@@ -16042,7 +16042,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 6200000, guid: a1308be4fd0620148b98cd136b9a58b2, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -16062,6 +16062,9 @@ MonoBehaviour:
   moveSpeed: 6
   maxJumpHeight: 20
   jumpChargeSpeed: 50
-  groundLayer:
+  terrainLayer:
     serializedVersion: 2
     m_Bits: 8
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1

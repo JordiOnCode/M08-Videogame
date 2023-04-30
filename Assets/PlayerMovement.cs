@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float maxJumpHeight = 20f;
-    public float jumpChargeSpeed = 10f;
-    public LayerMask groundLayer;
+    public float maxJumpHeight = 10f;
+    public float jumpChargeSpeed = 5f;
+    public LayerMask terrainLayer; // Layer for the terrain
+    public LayerMask playerLayer;  // Layer for the player
 
     private Rigidbody2D rb;
     private float jumpCharge;
     private bool isJumping;
-    private bool isColliding; // Variable para saber si el jugador está colisionando
 
     void Start()
     {
@@ -23,14 +23,14 @@ public class PlayerMovement : MonoBehaviour
     {
         float moveX = 0;
 
-        if (IsGrounded() && !isJumping && !isColliding) // Solo permitir el movimiento si el jugador no está saltando y no está colisionando
+        if (IsGrounded() && !isJumping)
         {
             moveX = Input.GetAxis("Horizontal");
         }
 
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && IsGrounded() && !isColliding)
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             isJumping = true;
             jumpCharge = 0;
@@ -52,7 +52,11 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded()
     {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.Raycast(rb.position, Vector2.down, rb.GetComponent<Collider2D>().bounds.extents.y + extraHeight, groundLayer);
-        return raycastHit.collider != null;
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(
+            new Vector2(rb.position.x - rb.GetComponent<Collider2D>().bounds.extents.x, rb.position.y - rb.GetComponent<Collider2D>().bounds.extents.y - extraHeight),
+            new Vector2(rb.position.x + rb.GetComponent<Collider2D>().bounds.extents.x, rb.position.y - rb.GetComponent<Collider2D>().bounds.extents.y - extraHeight),
+            terrainLayer);
+        return colliders.Length > 0;
     }
+
 }
