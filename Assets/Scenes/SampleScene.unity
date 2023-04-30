@@ -15405,8 +15405,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990857462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.48, y: -2.12, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3.6195, y: -2.3191, z: 0}
+  m_LocalScale: {x: 0.720337, y: 0.75411934, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -15454,7 +15454,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a1308be4fd0620148b98cd136b9a58b2, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -15471,12 +15471,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7babfba6abf93954b8f225b3879e06d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0
+  walkSpeed: 6
   isGrounded: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
-  bounceMat: {fileID: 0}
-  normalMat: {fileID: 0}
+    m_Bits: 1
+  bounceMat: {fileID: 6200000, guid: a1308be4fd0620148b98cd136b9a58b2, type: 2}
+  normalMat: {fileID: 6200000, guid: 3cc21178206a3cd4d966c3a9afed1d3e, type: 2}
   canJump: 1
   jumpValue: 0
+  maxJumpValue: 15
+  jumpIncrement: 0.1
