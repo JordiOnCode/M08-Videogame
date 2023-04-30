@@ -53,15 +53,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float extraHeight = 0.1f;
         RaycastHit2D raycastHit = Physics2D.Raycast(rb.position, Vector2.down, rb.GetComponent<Collider2D>().bounds.extents.y + extraHeight, groundLayer);
-        if (raycastHit.collider != null)
-        {
-            isColliding = false; // El jugador ha aterrizado en un bloque, por lo que ya no está colisionando
-        }
         return raycastHit.collider != null;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        isColliding = true; // El jugador está colisionando con un bloque
     }
 }

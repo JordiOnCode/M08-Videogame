@@ -15219,7 +15219,7 @@ GameObject:
   - component: {fileID: 1498573187}
   - component: {fileID: 1498573186}
   - component: {fileID: 1498573185}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16046,7 +16046,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1990857467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16064,4 +16064,4 @@ MonoBehaviour:
   jumpChargeSpeed: 50
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
