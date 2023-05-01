@@ -7,16 +7,18 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float maxJumpHeight = 10f;
     public float jumpChargeSpeed = 5f;
-    public LayerMask terrainLayer; // Layer for the terrain
-    public LayerMask playerLayer;  // Layer for the player
+
+    [SerializeField] private LayerMask jumpableGround;
 
     private Rigidbody2D rb;
+    private BoxCollider2D coll;
     private float jumpCharge;
     private bool isJumping;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        coll = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -51,12 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        float extraHeight = 0.1f;
-        Collider2D[] colliders = Physics2D.OverlapAreaAll(
-            new Vector2(rb.position.x - rb.GetComponent<Collider2D>().bounds.extents.x, rb.position.y - rb.GetComponent<Collider2D>().bounds.extents.y - extraHeight),
-            new Vector2(rb.position.x + rb.GetComponent<Collider2D>().bounds.extents.x, rb.position.y - rb.GetComponent<Collider2D>().bounds.extents.y - extraHeight),
-            terrainLayer);
-        return colliders.Length > 0;
+        return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
 
 }
