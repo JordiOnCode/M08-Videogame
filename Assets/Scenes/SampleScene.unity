@@ -16062,9 +16062,6 @@ MonoBehaviour:
   moveSpeed: 6
   maxJumpHeight: 20
   jumpChargeSpeed: 50
-  terrainLayer:
+  jumpableGround:
     serializedVersion: 2
     m_Bits: 8
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 1

@@ -23,14 +23,21 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float moveX = 0;
+        float moveX = Input.GetAxis("Horizontal");
 
         if (IsGrounded() && !isJumping)
         {
-            moveX = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
+        }
+        else if (isJumping)
+        {
+            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
         }
 
-        rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
+        if (Input.GetButton("Jump"))
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -50,7 +57,6 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
         }
     }
-
     bool IsGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
