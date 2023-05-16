@@ -43,10 +43,11 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
         }
 
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
+
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
