@@ -27,7 +27,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "61f601b8-f414-4a82-b2a1-a2de6fc014cb",
+                    "id": "b218f426-cd83-4afb-8e24-713424b51e2a",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -38,7 +38,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "c51c153a-774c-4263-a02e-fd7df95af4e3",
+                    "id": "bc9b8196-d0fa-4dd9-bdb3-1e1279e4beb9",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -49,7 +49,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "0485d2c6-fef6-43b2-be3a-29f88d5ebe14",
+                    "id": "e90667e0-ff5a-4d64-b070-421942421798",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -60,7 +60,7 @@
                 },
                 {
                     "name": "",
-                    "id": "4b1a83bd-828f-44ed-afa0-7f5c40a5fdc8",
+                    "id": "39b9967e-d05e-43a1-b8f7-edc33178c8a3",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
