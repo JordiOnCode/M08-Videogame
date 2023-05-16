@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float maxJumpHeight = 10f;
-    public float jumpChargeSpeed = 5f;
+    public float moveSpeed = 6f;
+    public float maxJumpHeight = 20f;
+    public float jumpChargeSpeed = 30f;
+
+    // Nueva variable para la velocidad máxima de caída.
+    public float maxFallSpeed = -15f;
 
     [SerializeField] private LayerMask jumpableGround;
 
@@ -34,6 +37,12 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
         }
 
+        // Verificar y limitar la velocidad de caída.
+        if (rb.velocity.y < maxFallSpeed)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
+        }
+
         if (Input.GetButton("Jump"))
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -57,9 +66,9 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
         }
     }
+
     bool IsGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
-
 }
