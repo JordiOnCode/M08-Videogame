@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
 {
-    // Agrega más botones si los necesitas
-
-
     public float moveSpeed = 6f;
     public float maxJumpHeight = 20f;
     public float jumpChargeSpeed = 30f;
@@ -20,55 +16,45 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     private BoxCollider2D coll;
     private float jumpCharge;
     private bool isJumping;
+    private float moveX;
+    private float jumpStartTime;
 
-    void Start()
+    private Controls controls; // Variable para almacenar las acciones de entrada
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
-        Controls controls = new Controls();
+        controls = new Controls();
         controls.Player.SetCallbacks(this);
+    }
+
+    void OnEnable()
+    {
+        controls.Player.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Player.Disable();
     }
 
     void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-
         if (IsGrounded() && !isJumping)
         {
             rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
         }
         else if (isJumping)
         {
+            float jumpDuration = Time.time - jumpStartTime;
+            jumpCharge = Mathf.Min(jumpDuration * jumpChargeSpeed, maxJumpHeight);
             rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
         }
 
         if (rb.velocity.y < maxFallSpeed)
         {
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
-        }
-
-        if (Input.GetButton("Jump") && IsGrounded())
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-
-
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            isJumping = true;
-            jumpCharge = 0;
-        }
-
-        if (Input.GetButton("Jump") && isJumping)
-        {
-            jumpCharge += Time.deltaTime * jumpChargeSpeed;
-            jumpCharge = Mathf.Min(jumpCharge, maxJumpHeight);
-        }
-
-        if (Input.GetButtonUp("Jump") && isJumping)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpCharge);
-            isJumping = false;
         }
     }
 
@@ -79,41 +65,21 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        float moveX = context.ReadValue<Vector2>().x;
-        if (IsGrounded() && !isJumping)
-        {
-            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        }
-        else if (isJumping)
-        {
-            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        }
+        moveX = context.ReadValue<Vector2>().x;
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started && IsGrounded())
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-
-        if (context.performed && IsGrounded())
+        if (context.phase == InputActionPhase.Started && IsGrounded())
         {
             isJumping = true;
-            jumpCharge = 0;
+            jumpStartTime = Time.time;
         }
 
-        if (context.performed && isJumping)
-        {
-            jumpCharge += Time.deltaTime * jumpChargeSpeed;
-            jumpCharge = Mathf.Min(jumpCharge, maxJumpHeight);
-        }
-
-        if (context.canceled && isJumping)
+        if (context.phase == InputActionPhase.Canceled && isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpCharge);
             isJumping = false;
         }
     }
-
 }

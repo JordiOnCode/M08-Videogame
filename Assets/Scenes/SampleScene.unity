@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 29450151}
   - component: {fileID: 29450153}
   - component: {fileID: 29450152}
+  - component: {fileID: 29450154}
   m_Layer: 5
   m_Name: ButtonJump
   m_TagString: Untagged
@@ -199,6 +200,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 29450150}
   m_CullTransparentMesh: 1
+--- !u!114 &29450154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29450150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/space
 --- !u!1 &105111233
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +437,7 @@ GameObject:
   - component: {fileID: 540704167}
   - component: {fileID: 540704169}
   - component: {fileID: 540704168}
+  - component: {fileID: 540704170}
   m_Layer: 5
   m_Name: ButtonRight
   m_TagString: Untagged
@@ -488,6 +503,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 540704166}
   m_CullTransparentMesh: 1
+--- !u!114 &540704170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540704166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/rightArrow
 --- !u!1 &1155637030
 GameObject:
   m_ObjectHideFlags: 0
@@ -16873,7 +16901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990857462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -5.5, z: 0}
+  m_LocalPosition: {x: 1.5, y: -5.44, z: 0}
   m_LocalScale: {x: 0.720337, y: 0.75411934, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
