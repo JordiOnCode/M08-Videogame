@@ -49,8 +49,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             float jumpDuration = Time.time - jumpStartTime;
             jumpCharge = Mathf.Min(jumpDuration * jumpChargeSpeed, maxJumpHeight);
-            // Solo cambia la dirección, no se mueve
-            if (moveX != 0) rb.velocity = new Vector2(Mathf.Sign(moveX) * Mathf.Epsilon, rb.velocity.y);
+            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
         }
 
         if (rb.velocity.y < maxFallSpeed)
@@ -75,7 +74,6 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             isJumping = true;
             jumpStartTime = Time.time;
-            rb.velocity = Vector2.zero; // Detén al personaje cuando comienza a cargar el salto
         }
 
         if (context.phase == InputActionPhase.Canceled && isJumping)
@@ -85,4 +83,3 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         }
     }
 }
-
