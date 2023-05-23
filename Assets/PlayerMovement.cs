@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     private float moveX;
     private float jumpStartTime;
 
+    private bool isJumpingAnimation;
+
     private Controls controls; // Variable para almacenar las acciones de entrada
 
     void Awake()
@@ -89,32 +91,41 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
             rb.velocity = new Vector2(rb.velocity.x, jumpCharge);
             isJumping = false;
         }
-    }
+    }    
 
     private void UpdateAnimation()
     {
-        if (moveX > 0f)
-        {
-            anim.SetBool("running", true);
-            sprite.flipX = true;
-        }
-        else if(moveX < 0f)
-        {
-            anim.SetBool("running", true);
-            sprite.flipX = false;
-        }
-        else
+        if (isJumpingAnimation)
         {
             anim.SetBool("running", false);
-        }
-
-        if (rb.velocity == Vector2.zero)
-        {
-            anim.SetBool("", true);
+            anim.SetBool("press_Jump", true);
         }
         else
         {
-            anim.SetBool("", false);
+            if (moveX > 0f)
+            {
+                anim.SetBool("running", true);
+                sprite.flipX = true;
+            }
+            else if (moveX < 0f)
+            {
+                anim.SetBool("running", true);
+                sprite.flipX = false;
+            }
+            else
+            {
+                anim.SetBool("running", false);
+            }
+            anim.SetBool("press_Jump", false);
+        }
+
+        if (controls.Player.Jump.ReadValue<float>() > 0f)
+        {
+            isJumpingAnimation = true;
+        }
+        else
+        {
+            isJumpingAnimation = false;
         }
     }
 }
