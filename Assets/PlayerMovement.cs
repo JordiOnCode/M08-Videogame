@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private LayerMask jumpableGround;
 
     private Rigidbody2D rb;
+    private Animator anim;
+    private SpriteRenderer sprite;
     private BoxCollider2D coll;
     private float jumpCharge;
     private bool isJumping;
@@ -27,6 +29,8 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         coll = GetComponent<BoxCollider2D>();
         controls = new Controls();
         controls.Player.SetCallbacks(this);
+        anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void OnEnable()
@@ -57,6 +61,8 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
         }
+
+        UpdateAnimation();
     }
 
     bool IsGrounded()
@@ -66,7 +72,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveX = context.ReadValue<Vector2>().x;
+        moveX = context.ReadValue<Vector2>().x;        
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -82,6 +88,33 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpCharge);
             isJumping = false;
+        }
+    }
+
+    private void UpdateAnimation()
+    {
+        if (moveX > 0f)
+        {
+            anim.SetBool("running", true);
+            sprite.flipX = true;
+        }
+        else if(moveX < 0f)
+        {
+            anim.SetBool("running", true);
+            sprite.flipX = false;
+        }
+        else
+        {
+            anim.SetBool("running", false);
+        }
+
+        if (rb.velocity == Vector2.zero)
+        {
+            anim.SetBool("", true);
+        }
+        else
+        {
+            anim.SetBool("", false);
         }
     }
 }
