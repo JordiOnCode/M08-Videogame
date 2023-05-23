@@ -21,7 +21,9 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     private float moveX;
     private float jumpStartTime;
 
-    private bool isJumpingAnimation;
+    private bool isJumpingAnimation, isRunning;
+
+    [SerializeField] private AudioSource jumpSoundEffect, runSoundEffect;
 
     private Controls controls; // Variable para almacenar las acciones de entrada
 
@@ -33,6 +35,8 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         controls.Player.SetCallbacks(this);
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+
+        runSoundEffect.loop = true;
     }
 
     void OnEnable()
@@ -49,10 +53,10 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     {
         if (IsGrounded() && !isJumping)
         {
-            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);            
         }
         else if (isJumping)
-        {
+        {            
             float jumpDuration = Time.time - jumpStartTime;
             jumpCharge = Mathf.Min(jumpDuration * jumpChargeSpeed, maxJumpHeight);
             // Solo cambia la dirección, no se mueve
@@ -80,7 +84,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && IsGrounded())
-        {
+        {            
             isJumping = true;
             jumpStartTime = Time.time;
             rb.velocity = Vector2.zero; // Detener al personaje cuando comienza a cargar el salto
@@ -88,10 +92,11 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
 
         if (context.phase == InputActionPhase.Canceled && isJumping)
         {
+            jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpCharge);
             isJumping = false;
         }
-    }    
+    }
 
     private void UpdateAnimation()
     {
@@ -99,6 +104,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             anim.SetBool("running", false);
             anim.SetBool("press_Jump", true);
+            runSoundEffect.Stop();
         }
         else
         {
@@ -126,6 +132,17 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         else
         {
             isJumpingAnimation = false;
+        }
+
+        if (isRunning && moveX == 0f)
+        {
+            isRunning = false;
+            runSoundEffect.Stop();
+        }
+        else if (!isRunning && moveX != 0f && IsGrounded())
+        {
+            isRunning = true;
+            runSoundEffect.Play();
         }
     }
 }
