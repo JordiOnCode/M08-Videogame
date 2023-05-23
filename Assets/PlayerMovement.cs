@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             isJumping = true;
             jumpStartTime = Time.time;
-            rb.velocity = Vector2.zero; // Detén al personaje cuando comienza a cargar el salto
+            rb.velocity = Vector2.zero; // Detener al personaje cuando comienza a cargar el salto
         }
 
         if (context.phase == InputActionPhase.Canceled && isJumping)
