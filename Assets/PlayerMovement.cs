@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
     private bool isJumpingAnimation, isRunning;
 
     [SerializeField] private AudioSource jumpSoundEffect, runSoundEffect;
+    [SerializeField] private AudioSource shortLandingSoundEffect, longLandingSoundEffect;
 
     private Controls controls; // Variable para almacenar las acciones de entrada
 
@@ -69,6 +70,7 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         }
 
         UpdateAnimation();
+        UpdateSounds();
     }
 
     bool IsGrounded()
@@ -81,12 +83,18 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         moveX = context.ReadValue<Vector2>().x;        
     }
 
+    private float jumpEndTime;
+    private bool hasLanded;
+    private bool wasInAir;
+
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {            
             isJumping = true;
             jumpStartTime = Time.time;
+            hasLanded = false;
+            wasInAir = false;
             rb.velocity = Vector2.zero; // Detener al personaje cuando comienza a cargar el salto
         }
 
@@ -95,6 +103,8 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpCharge);
             isJumping = false;
+            wasInAir = true;
+            jumpEndTime = Time.time;
         }
     }
 
@@ -143,6 +153,37 @@ public class PlayerMovement : MonoBehaviour, Controls.IPlayerActions
         {
             isRunning = true;
             runSoundEffect.Play();
+        }
+    }
+
+    private void UpdateSounds()
+    {
+        if (IsGrounded() && wasInAir && !hasLanded)
+        {
+            jumpEndTime = Time.time; // Actualizamos el tiempo de finalización del salto cuando aterriza
+
+            // Si el tiempo de salto fue más de 2 segundos, reproduce el sonido de aterrizaje largo
+            if (jumpEndTime - jumpStartTime >= 2f)
+            {
+                longLandingSoundEffect.Play();
+            }
+            // De lo contrario, reproduce el sonido de aterrizaje corto
+            else
+            {
+                shortLandingSoundEffect.Play();
+            }
+
+            hasLanded = true; // Indicamos que el sonido de aterrizaje ya se ha reproducido
+            wasInAir = false; // Resetear el flag si el personaje ha aterrizado
+        }
+        else if (!IsGrounded())
+        {
+            hasLanded = false; // Resetear el flag si el personaje no está en el suelo
+            if (!wasInAir) // Si no estábamos en el aire ya, marcamos el inicio del salto
+            {
+                jumpStartTime = Time.time;
+            }
+            wasInAir = true; // Marcar que el personaje estaba en el aire
         }
     }
 }
