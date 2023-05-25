@@ -30,7 +30,6 @@ public class MenuPausa : MonoBehaviour
         botonJump.SetActive(false);
         menuPausa.SetActive(true);
 
-        // Desactivar el volumen del audio de la cámara
         camara.GetComponent<AudioSource>().volume = musicVolumePause;
 
         juegoEnPausa = true;
@@ -45,7 +44,6 @@ public class MenuPausa : MonoBehaviour
         botonJump.SetActive(true);
         menuPausa.SetActive(false);
 
-        // Restaurar el volumen original del audio de la cámara si el juego estaba en pausa
         if (juegoEnPausa)
         {
             camara.GetComponent<AudioSource>().volume = volumenOriginal;
@@ -64,7 +62,6 @@ public class MenuPausa : MonoBehaviour
         botonJump.SetActive(true);
         menuPausa.SetActive(false);
 
-        // Restaurar el volumen original del audio de la cámara si el juego estaba en pausa
         if (juegoEnPausa)
         {
             camara.GetComponent<AudioSource>().volume = volumenOriginal;
