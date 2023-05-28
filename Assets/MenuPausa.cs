@@ -10,6 +10,7 @@ public class MenuPausa : MonoBehaviour
     [SerializeField] private GameObject botonRight;
     [SerializeField] private GameObject botonJump;
     [SerializeField] private GameObject menuPausa;
+    [SerializeField] public GameObject textPanel;
     [SerializeField] private Camera camara;
     [SerializeField] private float musicVolumePause;
 
@@ -28,6 +29,7 @@ public class MenuPausa : MonoBehaviour
         botonLeft.SetActive(false);
         botonRight.SetActive(false);
         botonJump.SetActive(false);
+        textPanel.SetActive(false);
         menuPausa.SetActive(true);
 
         camara.GetComponent<AudioSource>().volume = musicVolumePause;
@@ -42,6 +44,7 @@ public class MenuPausa : MonoBehaviour
         botonLeft.SetActive(true);
         botonRight.SetActive(true);
         botonJump.SetActive(true);
+        textPanel.SetActive(true);
         menuPausa.SetActive(false);
 
         if (juegoEnPausa)
@@ -60,6 +63,7 @@ public class MenuPausa : MonoBehaviour
         botonLeft.SetActive(true);
         botonRight.SetActive(true);
         botonJump.SetActive(true);
+        textPanel.SetActive(true);
         menuPausa.SetActive(false);
 
         if (juegoEnPausa)
